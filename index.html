@@ -1,14 +1,23 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Chamada via 3CX</title>
+  <title>Ligação 3CX</title>
+  <style>
+    /* Oculta elementos de chat */
+    .wp-livechat, 
+    .wp-livechat-inner, 
+    .chat-button, 
+    .chat-message,
+    .wp-chat-container {
+      display: none !important;
+    }
+  </style>
 </head>
 <body>
-  <h1>Fale Conosco por Chamada</h1>
+  <h1>Fale conosco por chamada</h1>
 
-  <!-- Botão de chamada do 3CX (sem chat) -->
+  <!-- Widget do 3CX Live Chat & Talk -->
   <call-us 
     phonesystem-url="https://alca2c.my3cx.com.br" 
     style="position:fixed;font-size:16px;line-height:17px;z-index:99999;right:20px;bottom:20px;" 
@@ -19,6 +28,7 @@
     minimized-style="bubbleright" 
     allow-call="true" 
     allow-video="false" 
+    allow-chat="false"
     allow-soundnotifications="true" 
     enable-mute="true" 
     enable-onmobile="true" 
@@ -38,10 +48,8 @@
     chat-delay="2000" 
     enable-direct-call="true" 
     enable-ga="false" 
-    allow-chat="false"
   ></call-us>
 
-  <!-- Script obrigatório -->
   <script defer src="https://downloads-global.3cx.com/downloads/livechatandtalk/v1/callus.js" id="tcx-callus-js" charset="utf-8"></script>
 </body>
 </html>
