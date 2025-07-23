@@ -2,7 +2,28 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>3CX - Ligação Direta</title>
+  <title>3CX - Ligação Direta (sem chat via CSS)</title>
+  <style>
+    /* Esconde a janela de chat e o campo de texto */
+    .wp-livechat, 
+    .wp-livechat-inner,
+    div[data-id="text-chat"],
+    div.wp-livechat-chat,
+    div.wp-livechat-textarea {
+      display: none !important;
+    }
+
+    /* Esconde o botão "Converse conosco" que abre o chat */
+    div.wp-livechat-launcher div:nth-child(1) {
+      display: none !important;
+    }
+
+    /* Mantém visível o segundo botão (normalmente o botão de ligação) */
+    div.wp-livechat-launcher div:nth-child(2) {
+      display: block !important;
+      border-top: none !important;
+    }
+  </style>
 </head>
 <body>
 
@@ -16,7 +37,7 @@
     minimized-style="bubbleright" 
     allow-call="true" 
     allow-video="false" 
-    allow-chat="false"
+    allow-chat="true"
     allow-soundnotifications="true" 
     enable-mute="true" 
     enable-onmobile="true" 
