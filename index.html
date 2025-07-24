@@ -1,84 +1,35 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Atendimento via WebRTC</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ligação via WebRTC</title>
 
   <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      background: linear-gradient(135deg, #4A90E2, #50E3C2);
-      color: #fff;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-    h1 {
-      margin-bottom: 20px;
-      font-size: 2rem;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-    }
-    #ligarBtn {
-      background: #fff;
-      color: #4A90E2;
-      padding: 15px 30px;
-      border: none;
-      border-radius: 50px;
-      font-size: 1.2rem;
-      cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-      transition: background .3s, transform .2s;
-    }
-    #ligarBtn:active {
-      transform: scale(0.95);
-    }
-    #ligarBtn:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
-    /* Esconde o widget padrão do 3CX (não aparecerá no layout) */
-    #wp-live-chat-by-3CX {
+    /* Esconde partes do chat mantendo apenas ligação */
+    .wp-live-chat-widget .chat-area,
+    .wp-live-chat-widget .messages-wrapper,
+    .wp-live-chat-widget .message-input,
+    .wp-live-chat-widget .start-chat,
+    .wp-live-chat-widget .chat-header,
+    .wp-live-chat-widget .wrap,
+    .wp-live-chat-widget .greeting-message {
       display: none !important;
-      visibility: hidden !important;
+    }
+
+    .wp-live-chat-widget {
+      height: auto !important;
+      min-height: 0 !important;
     }
   </style>
 </head>
 <body>
 
-  <div>
-    <h1>Converse com nosso suporte!</h1>
-    <button id="ligarBtn" disabled>Ligar agora</button>
-  </div>
+  <!-- Widget 3CX com ligação -->
+  <call-us-selector phonesystem-url="https://alca2c.my3cx.com.br" party="LiveChat154565"></call-us-selector>
 
-  <!-- Integração 3CX -->
-  <call-us
-    phonesystem-url="https://alca2c.my3cx.com.br"
-    id="wp-live-chat-by-3CX"
-    minimized="true"
-    allow-call="true"
-    allow-video="false"
-    enable="true"
-    enable-direct-call="true"
-    party="LiveChat154565"
-  ></call-us>
+  <!-- Script 3CX -->
+  <script defer src="https://downloads-global.3cx.com/downloads/livechatandtalk/v1/callus.js" id="tcx-callus-js" charset="utf-8"></script>
 
-  <script src="https://downloads-global.3cx.com/downloads/livechatandtalk/v1/callus.js" charset="utf-8"></script>
-  <script>
-    const btn = document.getElementById('ligarBtn');
-
-    const checkAPI = setInterval(() => {
-      if (window.tcxCallUs && typeof window.tcxCallUs.makeCall === 'function') {
-        clearInterval(checkAPI);
-        btn.disabled = false;
-        btn.addEventListener('click', () => {
-          window.tcxCallUs.makeCall();
-        });
-      }
-    }, 300);
-  </script>
 </body>
 </html>
