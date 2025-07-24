@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Suporte por Ligação</title>
 
-  <!-- Estilo personalizado -->
   <style>
     body {
       margin: 0;
@@ -37,28 +36,34 @@
       font-size: 1.1rem;
       margin-bottom: 30px;
     }
-
-    /* Esconde o botão de chat (Converse conosco) */
-    call-us-selector div[aria-label="Converse conosco"] {
-      display: none !important;
-    }
-
-    /* Ajusta o botão de chamada se necessário */
-    call-us-selector div[aria-label="Entre em contato"] {
-      margin-left: 0 !important;
-    }
   </style>
 
-  <!-- Script do 3CX -->
-  <script defer src="https://downloads-global.3cx.com/downloads/livechatandtalk/v1/callus.js" id="tcx-callus-js" charset="utf-8"></script>
+  <!-- Script para carregar o callus.js depois de configurar -->
+  <script>
+    window.onload = function() {
+      const script = document.createElement("script");
+      script.src = "https://downloads-global.3cx.com/downloads/livechatandtalk/v1/callus.js";
+      script.id = "tcx-callus-js";
+      script.setAttribute("charset", "utf-8");
+      script.setAttribute("data-cfg", JSON.stringify({
+        "Url": "https://alca2c.my3cx.com.br",
+        "Position": "right",
+        "Minimized": true,
+        "EnableChat": false,  // <--- ESSENCIAL PARA DESATIVAR O CHAT
+        "EnableCallback": false,
+        "EnableCall": true,
+        "CallTitle": "Ligue para nosso suporte",
+        "OfflineEnabled": false,
+        "ShowCallUsFirst": true
+      }));
+      document.body.appendChild(script);
+    };
+  </script>
 </head>
 <body>
   <div class="container">
     <h1>Suporte por Ligação</h1>
-    <p>Clique no botão de ligação abaixo para falar com nosso suporte. O chat foi desativado para garantir uma comunicação direta.</p>
+    <p>Clique no botão azul no canto para iniciar a ligação. O chat foi 100% desativado.</p>
   </div>
-
-  <!-- Componente 3CX com chat desativado via CSS -->
-  <call-us-selector phonesystem-url="https://alca2c.my3cx.com.br" party="LiveChat154565"></call-us-selector>
 </body>
 </html>
