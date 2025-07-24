@@ -1,69 +1,86 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Suporte por Ligação</title>
-
+  <title>Suporte por Ligação - ALCA2C</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #1f3c88, #6dd5ed);
-      height: 100vh;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1b365d, #4680c2);
+      color: white;
       display: flex;
-      align-items: center;
       justify-content: center;
-      color: #fff;
+      align-items: center;
+      height: 100vh;
       text-align: center;
     }
 
     .container {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 40px;
-      border-radius: 16px;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 30px 50px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
     }
 
-    .container h1 {
-      font-size: 2rem;
-      margin-bottom: 10px;
+    h1 {
+      font-size: 2.2em;
+      margin-bottom: 15px;
     }
 
-    .container p {
-      font-size: 1.1rem;
-      margin-bottom: 30px;
+    p {
+      font-size: 1.2em;
+    }
+
+    /* === Ocultar o CHAT do widget === */
+    .tcx-widget-root .tcx-message-area,
+    .tcx-widget-root .tcx-send-message-container,
+    .tcx-widget-root .tcx-chat-button,
+    .tcx-widget-root .tcx-chat-header-title {
+      display: none !important;
+    }
+
+    /* Opcional: força o foco só no botão de chamada */
+    .tcx-widget-root .tcx-call-button {
+      display: flex !important;
     }
   </style>
-
-  <!-- Script para carregar o callus.js depois de configurar -->
-  <script>
-    window.onload = function() {
-      const script = document.createElement("script");
-      script.src = "https://downloads-global.3cx.com/downloads/livechatandtalk/v1/callus.js";
-      script.id = "tcx-callus-js";
-      script.setAttribute("charset", "utf-8");
-      script.setAttribute("data-cfg", JSON.stringify({
-        "Url": "https://alca2c.my3cx.com.br",
-        "Position": "right",
-        "Minimized": true,
-        "EnableChat": false,  // <--- ESSENCIAL PARA DESATIVAR O CHAT
-        "EnableCallback": false,
-        "EnableCall": true,
-        "CallTitle": "Ligue para nosso suporte",
-        "OfflineEnabled": false,
-        "ShowCallUsFirst": true
-      }));
-      document.body.appendChild(script);
-    };
-  </script>
 </head>
 <body>
   <div class="container">
     <h1>Suporte por Ligação</h1>
-    <p>Clique no botão azul no canto para iniciar a ligação. O chat foi 100% desativado.</p>
+    <p>Clique no botão no canto inferior direito para iniciar uma ligação. O chat foi 100% desativado.</p>
   </div>
+
+  <!-- Widget 3CX SOMENTE COM LIGAÇÃO -->
+  <call-us 
+    phonesystem-url="https://alca2c.my3cx.com.br" 
+    style="position:fixed; font-size:16px; line-height:17px; z-index:99999; right:20px; bottom:20px;" 
+    id="wp-live-chat-by-3CX" 
+    minimized="true" 
+    animation-style="noanimation" 
+    party="LiveChat154565" 
+    minimized-style="bubbleright" 
+    allow-call="true" 
+    allow-video="false" 
+    allow-soundnotifications="false" 
+    enable-mute="true" 
+    enable-onmobile="true" 
+    offline-enabled="true" 
+    enable="true" 
+    ignore-queueownership="false" 
+    authentication="none" 
+    show-operator-actual-name="false" 
+    gdpr-enabled="false" 
+    lang="pt" 
+    button-icon-type="bubble" 
+    greeting-visibility="none" 
+    greeting-offline-visibility="none" 
+    chat-delay="5000" 
+    enable-direct-call="true">
+  </call-us>
+
+  <script defer src="https://downloads-global.3cx.com/downloads/livechatandtalk/v1/callus.js" charset="utf-8"></script>
 </body>
 </html>
