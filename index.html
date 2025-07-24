@@ -2,34 +2,63 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ligação via WebRTC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Suporte por Ligação</title>
 
+  <!-- Estilo personalizado -->
   <style>
-    /* Esconde partes do chat mantendo apenas ligação */
-    .wp-live-chat-widget .chat-area,
-    .wp-live-chat-widget .messages-wrapper,
-    .wp-live-chat-widget .message-input,
-    .wp-live-chat-widget .start-chat,
-    .wp-live-chat-widget .chat-header,
-    .wp-live-chat-widget .wrap,
-    .wp-live-chat-widget .greeting-message {
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1f3c88, #6dd5ed);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-align: center;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 16px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    .container h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .container p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+    }
+
+    /* Esconde o botão de chat (Converse conosco) */
+    call-us-selector div[aria-label="Converse conosco"] {
       display: none !important;
     }
 
-    .wp-live-chat-widget {
-      height: auto !important;
-      min-height: 0 !important;
+    /* Ajusta o botão de chamada se necessário */
+    call-us-selector div[aria-label="Entre em contato"] {
+      margin-left: 0 !important;
     }
   </style>
+
+  <!-- Script do 3CX -->
+  <script defer src="https://downloads-global.3cx.com/downloads/livechatandtalk/v1/callus.js" id="tcx-callus-js" charset="utf-8"></script>
 </head>
 <body>
+  <div class="container">
+    <h1>Suporte por Ligação</h1>
+    <p>Clique no botão de ligação abaixo para falar com nosso suporte. O chat foi desativado para garantir uma comunicação direta.</p>
+  </div>
 
-  <!-- Widget 3CX com ligação -->
+  <!-- Componente 3CX com chat desativado via CSS -->
   <call-us-selector phonesystem-url="https://alca2c.my3cx.com.br" party="LiveChat154565"></call-us-selector>
-
-  <!-- Script 3CX -->
-  <script defer src="https://downloads-global.3cx.com/downloads/livechatandtalk/v1/callus.js" id="tcx-callus-js" charset="utf-8"></script>
-
 </body>
 </html>
