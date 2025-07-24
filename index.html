@@ -1,76 +1,39 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Chamada WebRTC 3CX</title>
+  <title>Chamada 3CX sem Chat</title>
   <style>
-    .botao-ligar {
-      background-color: #007dc5;
-      color: white;
-      padding: 14px 28px;
-      font-size: 18px;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      font-family: sans-serif;
-      display: inline-block;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      transition: background-color 0.3s;
-    }
-
-    .botao-ligar:hover {
-      background-color: #005a93;
-    }
-
-    /* Esconde o widget do 3CX completamente */
+    /* Oculta o ícone/flutuante do chat se for carregado */
     call-us-selector,
-    call-us,
-    #wp-live-chat-by-3CX,
-    .wp-livechat,
-    .wp-livechat-launcher,
-    .wp-livechat-launcher-menu {
+    #wp-live-chat-by-3CX {
       display: none !important;
       visibility: hidden !important;
-      opacity: 0 !important;
     }
   </style>
 </head>
 <body>
+  <h1>Chamada para Suporte</h1>
+  <button onclick="iniciarChamada()">Ligar agora</button>
 
-  <!-- Botão personalizado -->
-  <button class="botao-ligar" id="botaoLigar" disabled>
-    ⏳ Carregando...
-  </button>
-
-  <!-- Componente invisível para carregar a estrutura do 3CX -->
+  <!-- Script oficial da 3CX -->
   <call-us-selector phonesystem-url="https://alca2c.my3cx.com.br" party="LiveChat154565"></call-us-selector>
+  <script defer src="https://downloads-global.3cx.com/downloads/livechatandtalk/v1/callus.js" id="tcx-callus-js" charset="utf-8"></script>
 
-  <!-- Script do 3CX -->
-  <script defer src="https://downloads-global.3cx.com/downloads/livechatandtalk/v1/callus.js" charset="utf-8"></script>
-
-  <!-- Script para aguardar API e iniciar chamada -->
   <script>
-    function esperarApi(callback) {
-      const intervalo = setInterval(() => {
-        if (window.Tcx && Tcx.Api && typeof Tcx.Api.startCall === 'function') {
-          clearInterval(intervalo);
-          callback();
+    // Aguarda a API da 3CX carregar
+    function iniciarChamada() {
+      const tentarChamada = setInterval(() => {
+        if (window.tcxCallUs) {
+          clearInterval(tentarChamada);
+          try {
+            window.tcxCallUs.makeCall(); // Só chamada
+          } catch (e) {
+            console.error("Erro ao iniciar a chamada:", e);
+          }
         }
-      }, 300);
+      }, 500);
     }
-
-    // Quando a API estiver pronta, ativa o botão
-    esperarApi(() => {
-      const botao = document.getElementById("botaoLigar");
-      botao.innerText = "📞 Ligar Agora";
-      botao.disabled = false;
-      botao.onclick = () => {
-        Tcx.Api.startCall();
-      };
-    });
   </script>
-
 </body>
 </html>
