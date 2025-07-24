@@ -2,10 +2,8 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Chamada 3CX sem Chat</title>
+  <title>Chamada 3CX WebRTC</title>
   <style>
-    /* Oculta o ícone/flutuante do chat se for carregado */
-    call-us-selector,
     #wp-live-chat-by-3CX {
       display: none !important;
       visibility: hidden !important;
@@ -13,27 +11,41 @@
   </style>
 </head>
 <body>
-  <h1>Chamada para Suporte</h1>
-  <button onclick="iniciarChamada()">Ligar agora</button>
+  <h1>Chamada via WebRTC</h1>
+  <button id="ligarBtn">Ligar agora</button>
 
-  <!-- Script oficial da 3CX -->
-  <call-us-selector phonesystem-url="https://alca2c.my3cx.com.br" party="LiveChat154565"></call-us-selector>
-  <script defer src="https://downloads-global.3cx.com/downloads/livechatandtalk/v1/callus.js" id="tcx-callus-js" charset="utf-8"></script>
+  <!-- Widget 3CX com configurações fixas -->
+  <call-us 
+    phonesystem-url="https://alca2c.my3cx.com.br" 
+    id="wp-live-chat-by-3CX"
+    minimized="true"
+    allow-call="true"
+    allow-video="false"
+    enable="true"
+    enable-direct-call="true"
+    party="LiveChat154565"
+  ></call-us>
+
+  <script src="https://downloads-global.3cx.com/downloads/livechatandtalk/v1/callus.js" charset="utf-8"></script>
 
   <script>
-    // Aguarda a API da 3CX carregar
-    function iniciarChamada() {
-      const tentarChamada = setInterval(() => {
-        if (window.tcxCallUs) {
-          clearInterval(tentarChamada);
+    const btn = document.getElementById('ligarBtn');
+
+    // Espera a API do 3CX carregar
+    const esperaAPI = setInterval(() => {
+      if (window.tcxCallUs && typeof window.tcxCallUs.makeCall === 'function') {
+        clearInterval(esperaAPI);
+
+        btn.addEventListener('click', () => {
           try {
-            window.tcxCallUs.makeCall(); // Só chamada
+            window.tcxCallUs.makeCall(); // Inicia chamada via WebRTC
           } catch (e) {
-            console.error("Erro ao iniciar a chamada:", e);
+            console.error("Erro ao iniciar chamada:", e);
+            alert("Erro ao iniciar a chamada.");
           }
-        }
-      }, 500);
-    }
+        });
+      }
+    }, 500);
   </script>
 </body>
 </html>
