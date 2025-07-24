@@ -1,70 +1,84 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Chamada WebRTC - 3CX</title>
+  <title>Atendimento via WebRTC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <style>
-    /* Oculta qualquer UI padrão do 3CX */
-    call-us-selector,
-    call-us,
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: linear-gradient(135deg, #4A90E2, #50E3C2);
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    }
+    #ligarBtn {
+      background: #fff;
+      color: #4A90E2;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      transition: background .3s, transform .2s;
+    }
+    #ligarBtn:active {
+      transform: scale(0.95);
+    }
+    #ligarBtn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    /* Esconde o widget padrão do 3CX (não aparecerá no layout) */
     #wp-live-chat-by-3CX {
       display: none !important;
-    }
-
-    /* Estilo do botão personalizado */
-    #botaoLigacao {
-      padding: 14px 28px;
-      background-color: #008080;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 18px;
-      cursor: pointer;
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    #botaoLigacao:hover {
-      background-color: #006666;
+      visibility: hidden !important;
     }
   </style>
 </head>
 <body>
 
-  <!-- Botão customizado -->
-  <button id="botaoLigacao">Ligar Agora</button>
+  <div>
+    <h1>Converse com nosso suporte!</h1>
+    <button id="ligarBtn" disabled>Ligar agora</button>
+  </div>
 
-  <!-- Script da 3CX -->
-  <script defer src="https://downloads-global.3cx.com/downloads/livechatandtalk/v1/callus.js" charset="utf-8"></script>
+  <!-- Integração 3CX -->
+  <call-us
+    phonesystem-url="https://alca2c.my3cx.com.br"
+    id="wp-live-chat-by-3CX"
+    minimized="true"
+    allow-call="true"
+    allow-video="false"
+    enable="true"
+    enable-direct-call="true"
+    party="LiveChat154565"
+  ></call-us>
 
-  <!-- Inicialização e clique no botão -->
+  <script src="https://downloads-global.3cx.com/downloads/livechatandtalk/v1/callus.js" charset="utf-8"></script>
   <script>
-    // Espera o script carregar
-    window.addEventListener("load", function () {
-      const interval = setInterval(function () {
-        if (window.Tcx && Tcx.Api) {
-          clearInterval(interval);
+    const btn = document.getElementById('ligarBtn');
 
-          // Inicializa a API do 3CX com seu URL e ID
-          Tcx.Api.initWebChat({
-            phoneSystemUrl: "https://alca2c.my3cx.com.br",
-            elementId: "custom-call",
-            party: "LiveChat154565",
-            allowChat: false,
-            allowCall: true,
-            allowVideo: false
-          });
-
-          // Botão personalizado chama o método do 3CX
-          document.getElementById("botaoLigacao").addEventListener("click", function () {
-            Tcx.Api.startCall();
-          });
-        }
-      }, 300);
-    });
+    const checkAPI = setInterval(() => {
+      if (window.tcxCallUs && typeof window.tcxCallUs.makeCall === 'function') {
+        clearInterval(checkAPI);
+        btn.disabled = false;
+        btn.addEventListener('click', () => {
+          window.tcxCallUs.makeCall();
+        });
+      }
+    }, 300);
   </script>
-
 </body>
 </html>
