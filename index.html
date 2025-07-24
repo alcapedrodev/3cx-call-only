@@ -1,65 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>3CX - Ligação Direta (sem chat via CSS)</title>
+  <meta charset="UTF-8">
+  <title>Ligar via 3CX</title>
   <style>
-    /* Esconde a janela de chat e o campo de texto */
-    .wp-livechat, 
-    .wp-livechat-inner,
-    div[data-id="text-chat"],
-    div.wp-livechat-chat,
-    div.wp-livechat-textarea {
-      display: none !important;
+    .botao-ligar {
+      background-color: #007dc5;
+      color: #fff;
+      padding: 12px 24px;
+      font-size: 18px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      font-family: sans-serif;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: background 0.3s ease;
     }
 
-    /* Esconde o botão "Converse conosco" que abre o chat */
-    div.wp-livechat-launcher div:nth-child(1) {
-      display: none !important;
-    }
-
-    /* Mantém visível o segundo botão (normalmente o botão de ligação) */
-    div.wp-livechat-launcher div:nth-child(2) {
-      display: block !important;
-      border-top: none !important;
+    .botao-ligar:hover {
+      background-color: #005a93;
     }
   </style>
 </head>
 <body>
 
-  <call-us 
-    phonesystem-url="https://alca2c.my3cx.com.br" 
-    style="position:fixed;font-size:16px;line-height:17px;z-index:99999;right:20px;bottom:20px;" 
-    id="wp-live-chat-by-3CX" 
-    minimized="true" 
-    animation-style="noanimation" 
-    party="LiveChat154565" 
-    minimized-style="bubbleright" 
-    allow-call="true" 
-    allow-video="false" 
-    allow-chat="true"
-    allow-soundnotifications="true" 
-    enable-mute="true" 
-    enable-onmobile="true" 
-    offline-enabled="true" 
-    enable="true" 
-    ignore-queueownership="false" 
-    authentication="none" 
-    show-operator-actual-name="true" 
-    aknowledge-received="true" 
-    gdpr-enabled="false" 
-    message-userinfo-format="both" 
-    message-dateformat="both" 
-    lang="pt" 
-    button-icon-type="bubble" 
-    greeting-visibility="none" 
-    greeting-offline-visibility="none" 
-    chat-delay="2000" 
-    enable-direct-call="true" 
-    enable-ga="false" 
-  ></call-us>
-
-  <script defer src="https://downloads-global.3cx.com/downloads/livechatandtalk/v1/callus.js" charset="utf-8"></script>
+  <a href="https://alca2c.my3cx.com.br/callus/#/call/LiveChat154565"
+     target="_blank"
+     class="botao-ligar">
+    📞 Ligar Agora
+  </a>
 
 </body>
 </html>
