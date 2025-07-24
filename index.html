@@ -2,35 +2,69 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Ligar via 3CX</title>
+  <title>Ligação WebRTC 3CX</title>
   <style>
     .botao-ligar {
       background-color: #007dc5;
       color: #fff;
-      padding: 12px 24px;
+      padding: 14px 28px;
       font-size: 18px;
+      font-weight: bold;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
       text-decoration: none;
-      display: inline-block;
       font-family: sans-serif;
+      display: inline-block;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      transition: background 0.3s ease;
+      transition: background-color 0.3s;
     }
 
     .botao-ligar:hover {
       background-color: #005a93;
     }
+
+    /* Esconde completamente o botão/flutuante do 3CX */
+    call-us-selector,
+    call-us,
+    #wp-live-chat-by-3CX,
+    .wp-livechat,
+    .wp-livechat-launcher,
+    .wp-livechat-launcher-menu {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+    }
   </style>
 </head>
 <body>
 
-  <a href="https://alca2c.my3cx.com.br/callus/#/call/LiveChat154565"
-     target="_blank"
-     class="botao-ligar">
+  <!-- Botão personalizado -->
+  <button class="botao-ligar" onclick="fazerLigacao()">
     📞 Ligar Agora
-  </a>
+  </button>
+
+  <!-- Widget 3CX invisível -->
+  <call-us-selector phonesystem-url="https://alca2c.my3cx.com.br" party="LiveChat154565"></call-us-selector>
+
+  <!-- Script do 3CX -->
+  <script defer src="https://downloads-global.3cx.com/downloads/livechatandtalk/v1/callus.js" id="tcx-callus-js" charset="utf-8"></script>
+
+  <!-- Script para disparar chamada WebRTC -->
+  <script>
+    function fazerLigacao() {
+      // Aguarda o widget 3CX carregar
+      const tentarChamar = () => {
+        if (window.Tcx && Tcx.Api && Tcx.Api.startCall) {
+          Tcx.Api.startCall();  // Inicia chamada WebRTC
+        } else {
+          setTimeout(tentarChamar, 300);  // Tenta novamente
+        }
+      };
+
+      tentarChamar();
+    }
+  </script>
 
 </body>
 </html>
