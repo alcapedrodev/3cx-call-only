@@ -2,11 +2,11 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Ligação WebRTC 3CX</title>
+  <title>Chamada WebRTC 3CX</title>
   <style>
     .botao-ligar {
       background-color: #007dc5;
-      color: #fff;
+      color: white;
       padding: 14px 28px;
       font-size: 18px;
       font-weight: bold;
@@ -24,7 +24,7 @@
       background-color: #005a93;
     }
 
-    /* Esconde completamente o botão/flutuante do 3CX */
+    /* Esconde o widget do 3CX completamente */
     call-us-selector,
     call-us,
     #wp-live-chat-by-3CX,
@@ -40,30 +40,36 @@
 <body>
 
   <!-- Botão personalizado -->
-  <button class="botao-ligar" onclick="fazerLigacao()">
-    📞 Ligar Agora
+  <button class="botao-ligar" id="botaoLigar" disabled>
+    ⏳ Carregando...
   </button>
 
-  <!-- Widget 3CX invisível -->
+  <!-- Componente invisível para carregar a estrutura do 3CX -->
   <call-us-selector phonesystem-url="https://alca2c.my3cx.com.br" party="LiveChat154565"></call-us-selector>
 
   <!-- Script do 3CX -->
-  <script defer src="https://downloads-global.3cx.com/downloads/livechatandtalk/v1/callus.js" id="tcx-callus-js" charset="utf-8"></script>
+  <script defer src="https://downloads-global.3cx.com/downloads/livechatandtalk/v1/callus.js" charset="utf-8"></script>
 
-  <!-- Script para disparar chamada WebRTC -->
+  <!-- Script para aguardar API e iniciar chamada -->
   <script>
-    function fazerLigacao() {
-      // Aguarda o widget 3CX carregar
-      const tentarChamar = () => {
-        if (window.Tcx && Tcx.Api && Tcx.Api.startCall) {
-          Tcx.Api.startCall();  // Inicia chamada WebRTC
-        } else {
-          setTimeout(tentarChamar, 300);  // Tenta novamente
+    function esperarApi(callback) {
+      const intervalo = setInterval(() => {
+        if (window.Tcx && Tcx.Api && typeof Tcx.Api.startCall === 'function') {
+          clearInterval(intervalo);
+          callback();
         }
-      };
-
-      tentarChamar();
+      }, 300);
     }
+
+    // Quando a API estiver pronta, ativa o botão
+    esperarApi(() => {
+      const botao = document.getElementById("botaoLigar");
+      botao.innerText = "📞 Ligar Agora";
+      botao.disabled = false;
+      botao.onclick = () => {
+        Tcx.Api.startCall();
+      };
+    });
   </script>
 
 </body>
